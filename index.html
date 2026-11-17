@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#232a6b">
+<title>Organize</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23232a6b'/%3E%3Cpath d='M16 34l10 10 22-24' stroke='%23ffd23f' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f5fb;--card:#fff;--ink:#161a3d;--mut:#6b7094;--line:#dde0ee;--acc:#232a6b;--hl:#ffd23f;--on:#fff;--hi:#d6455d;--md:#e08a1e;--lo:#3a9a7a;--soft:#e9ecf7;box-sizing:border-box}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0f1226;--card:#181c3a;--ink:#eef0ff;--mut:#9aa0cc;--line:#2a2f58;--acc:#8e9bff;--on:#0f1226;--soft:#212650}}
+:root[data-theme=dark]{--bg:#0f1226;--card:#181c3a;--ink:#eef0ff;--mut:#9aa0cc;--line:#2a2f58;--acc:#8e9bff;--on:#0f1226;--soft:#212650}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.4 "Bricolage Grotesque",system-ui,sans-serif;padding-top:env(safe-area-inset-top,0)}
+#app{max-width:560px;margin:0 auto;min-height:100%;padding:18px 18px 130px}
+h1{font-size:30px;line-height:1.1;font-weight:800;margin:6px 0 2px;letter-spacing:-.02em}
+h2{font-size:18px;font-weight:700;margin:26px 0 10px}
+.mut{color:var(--mut);font-size:14px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.row{display:flex;align-items:center;gap:12px}.sp{justify-content:space-between}.g{flex:1;min-width:0}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px}
+.card.tap{cursor:pointer}
+.chk{width:26px;height:26px;border-radius:8px;border:2px solid var(--acc);flex:none;display:grid;place-items:center;background:transparent}
+.chk.on{background:var(--acc)}.chk.on:after{content:"";width:6px;height:11px;border:solid var(--on);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.title{font-weight:600}.done .title{text-decoration:line-through;color:var(--mut)}.done{opacity:.75}
+.pill{display:inline-block;border:1.5px solid var(--line);border-radius:99px;padding:1px 10px;font-size:13px;margin-top:4px}
+.pill.alta{border-color:var(--hi);color:var(--hi)}.pill.media{border-color:var(--md);color:var(--md)}.pill.baja{border-color:var(--lo);color:var(--lo)}
+.late{color:var(--hi);font-weight:600}
+.btn{background:var(--acc);color:var(--on);border-radius:14px;padding:13px 18px;font-weight:700;width:100%}
+.btn.sec{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.sm{width:auto;padding:8px 14px;font-size:14px}.btn.danger{background:var(--hi);color:#fff}
+.ib{width:42px;height:42px;border-radius:12px;border:1.5px solid var(--line);display:grid;place-items:center;font-size:20px;flex:none;background:var(--card)}
+.fab{position:fixed;right:max(18px,calc(50% - 262px));bottom:calc(92px + env(safe-area-inset-bottom,0));width:58px;height:58px;border-radius:20px;background:var(--hl);color:#161a3d;font-size:32px;font-weight:600;box-shadow:0 6px 18px #0004;z-index:5}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1.5px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom,0);z-index:6}
+nav div{display:flex;width:100%;max-width:560px}
+nav a{flex:1;text-align:center;padding:10px 0 12px;font-size:13px;color:var(--mut);font-weight:600}
+nav a i{display:block;font-style:normal;font-size:22px;margin:0 auto 2px;width:46px;border-radius:99px;line-height:30px}
+nav a.on{color:var(--ink)}nav a.on i{background:var(--hl)}
+.seg{display:flex;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+.seg button{flex:1;padding:10px;font-weight:600;color:var(--mut)}.seg .on{background:var(--acc);color:var(--on)}
+.tabs{display:flex;border-bottom:2px solid var(--line);margin:14px 0}.tabs button{flex:1;padding:10px;font-weight:600;color:var(--mut);border-bottom:4px solid transparent;margin-bottom:-2px}.tabs .on{color:var(--ink);border-color:var(--hl)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{border:1.5px solid var(--line);background:var(--card);border-radius:99px;padding:8px 16px;font-weight:600}.chip.new{border-style:dashed;color:var(--mut)}
+.up{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}.up .card{min-width:150px;flex:1;margin:0}
+.bar{height:8px;border-radius:9px;background:var(--soft);overflow:hidden;margin-top:8px}.bar b{display:block;height:100%;background:var(--hl)}
+.grp{border:1.5px dashed var(--line);border-radius:18px;padding:12px;margin-bottom:14px}.grp.over{background:var(--soft);border-color:var(--acc)}
+.grp>.row{margin-bottom:8px}.grp .card{margin-bottom:8px}
+.sw{width:10px;height:38px;border-radius:5px;flex:none}.hd{color:var(--mut);cursor:grab;font-size:22px;touch-action:none;padding:0 2px}
+.dash{border:1.5px dashed var(--mut);border-radius:14px;padding:12px;width:100%;color:var(--mut);font-weight:600;background:transparent}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:14px 0}
+.days button{border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:8px 0;font-weight:600;font-size:13px;line-height:1.2}.days b{display:block;font-size:16px}
+.days .on{background:var(--acc);color:var(--on);border-color:var(--acc)}.days .today b{text-decoration:underline 3px var(--hl)}
+.mg{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.mg button{aspect-ratio:1;border-radius:12px;border:1.5px solid var(--line);background:var(--card);font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.mg .out{opacity:.35}.mg .today{border-color:var(--hl);border-width:3px}.mg .on{background:var(--acc);color:var(--on)}.dots{display:flex;gap:3px;height:6px}.dots i{width:6px;height:6px;border-radius:9px;background:var(--mut)}.dots i.t{background:var(--hi)}
+.ev{display:flex;gap:12px;margin-bottom:10px}.ev time{width:54px;font-size:14px;color:var(--mut);padding-top:12px;flex:none}.ev .card{flex:1;margin:0;border-left-width:8px}.ev .card.ent{border-style:dashed;border-left-style:dashed}
+#modal{position:fixed;inset:0;background:#0009;z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--bg);width:100%;max-width:560px;max-height:92%;overflow:auto;border-radius:24px 24px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0))}
+label{display:block;font-weight:600;margin:14px 0 6px;font-size:15px}
+input[type=text],input[type=date],input[type=time],select,textarea{width:100%;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card)}
+textarea{min-height:110px;resize:vertical}
+.opt{display:flex;gap:12px;align-items:center;border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:12px 14px;margin-bottom:8px;font-weight:600;margin-top:0}
+.opt input{width:22px;height:22px;accent-color:var(--acc)}
+.prio{display:flex;gap:8px}.prio label{flex:1;margin:0;text-align:center}.prio input{display:none}.prio span{display:block;padding:11px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);font-weight:600}.prio input:checked+span{background:var(--acc);color:var(--on);border-color:var(--acc)}
+.cols{display:flex;gap:8px;flex-wrap:wrap}.cols label{margin:0}.cols input{display:none}.cols span{display:block;width:34px;height:34px;border-radius:50%}.cols input:checked+span{outline:3px solid var(--ink);outline-offset:2px}
+.empty{text-align:center;color:var(--mut);padding:36px 10px}.empty p{margin:0 0 14px}
+.banner{background:var(--hl);color:#161a3d;border-radius:14px;padding:12px 14px;margin:14px 0;font-weight:600}
+.toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:99px;z-index:30;font-weight:600}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:up .2s ease-out}@keyframes up{from{transform:translateY(40px);opacity:.4}}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<nav><div id="nav"></div></nav>
+<div id="modal" hidden></div>
+<script>
+const KEY='organize.v1',COLORS=['#232a6b','#d6455d','#e08a1e','#3a9a7a','#2d8fd1','#8a4fd0','#c24f9b','#6b7094'];
+const SUGG=['Matemáticas','Lenguaje','Ciencias','Inglés','Historia','Física','Química','Biología','Programación','Arte'];
+const DAYS=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'],DL=['L','M','X','J','V','S','D'];
+const MONTHS=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const PR={alta:0,media:1,baja:2},PN={alta:'Alta',media:'Media',baja:'Baja'};
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch(_){}
+S=S||{name:'',theme:'auto',groups:[{id:'g1',name:'Semestre actual'}],subjects:[],tasks:[]};
+let cal={mode:'week',date:iso(new Date())},tab='tareas',collapsed={},view='todas0';
+const $=s=>document.querySelector(s),uid=()=>Math.random().toString(36).slice(2,9);
+const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+const dt=s=>new Date(s+'T00:00'),wd=d=>(d.getDay()+6)%7,addD=(s,n)=>{const d=dt(s);d.setDate(d.getDate()+n);return iso(d)};
+const todayS=()=>iso(new Date());
+const fmt=s=>{if(!s)return'Sin fecha';const d=dt(s);return d.getDate()+' de '+MONTHS[d.getMonth()]};
+const sub=id=>S.subjects.find(x=>x.id===id);
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function commit(){save();render()}
+function toast(t){const n=document.createElement('div');n.className='toast';n.textContent=t;document.body.append(n);setTimeout(()=>n.remove(),2000)}
+function applyTheme(){if(S.theme==='auto')document.documentElement.removeAttribute('data-theme');else document.documentElement.dataset.theme=S.theme}
+const route=()=>location.hash.slice(1)||'hoy';
+const pendCount=id=>S.tasks.filter(t=>t.subject===id&&!t.done).length;
+const byDue=(a,b)=>(a.due||'9')+(a.time||'99')>(b.due||'9')+(b.time||'99')?1:-1;
+
+/* ---------- vistas ---------- */
+function taskRow(t,opts={}){const s=sub(t.subject);
+ return `<div class="card row ${t.done?'done':''}"><button class="chk ${t.done?'on':''}" data-act="toggle" data-id="${t.id}" aria-label="Marcar tarea"></button>
+ <div class="g tap" data-act="edittask" data-id="${t.id}" style="cursor:pointer"><div class="title">${e(t.title)}</div>
+ ${opts.pill&&s?`<span class="pill">${e(s.name)}</span>`:''}
+ ${opts.due?`<div class="mut ${t.due<todayS()&&!t.done?'late':''}">Entrega: ${fmt(t.due)}${t.time?' · '+t.time:''}</div>`:''}</div>
+ ${opts.prio&&!t.done?`<span class="pill ${t.priority}">${PN[t.priority]}</span>`:''}${t.done&&t.due?`<span class="mut">${fmt(t.due)}</span>`:''}${opts.time?`<span class="mut ${t.due<todayS()?'late':''}">${t.due<todayS()?fmt(t.due):(t.time||'')}</span>`:''}</div>`}
+
+function vHoy(){const td=todayS(),now=new Date();
+ const pend=S.tasks.filter(t=>!t.done),hoy=pend.filter(t=>t.due&&t.due<=td).sort(byDue);
+ const prox=pend.filter(t=>t.due&&t.due>td).sort(byDue).slice(0,6);
+ const rem=pend.filter(t=>t.remind&&t.due>=td&&addD(t.due,-(t.remindDays||1))<=td).sort(byDue);
+ const ds=now.toLocaleDateString('es',{weekday:'long',day:'numeric',month:'long'});
+ return `<div class="row sp"><div><h1>Hola, ${e(S.name||'estudiante')}</h1><div class="mut">${ds[0].toUpperCase()+ds.slice(1)}</div></div></div>
+ ${rem.length?`<div class="banner">🔔 Recordatorio: ${rem.slice(0,3).map(t=>e(t.title)+' ('+fmt(t.due)+')').join(' · ')}</div>`:''}
+ <div class="row sp"><h2>Para hoy</h2><span class="mut">${hoy.length} pendiente${hoy.length===1?'':'s'}</span></div>
+ ${hoy.length?hoy.map(t=>taskRow(t,{pill:1,time:1})).join(''):`<div class="card mut">Nada pendiente para hoy. Toca + para agregar una tarea.</div>`}
+ <h2>Próximas entregas</h2>
+ ${prox.length?`<div class="up">${prox.map(t=>{const s=sub(t.subject);return `<div class="card tap" data-act="edittask" data-id="${t.id}"><div class="mut">${fmt(t.due)}</div><div class="title">${e(t.title)}</div><div class="mut">${s?e(s.name):''}</div><div class="bar"><b style="width:${Math.max(8,100-Math.max(0,(dt(t.due)-now)/864e5)*10)}%"></b></div></div>`}).join('')}</div>`:`<div class="card mut">No hay entregas próximas.</div>`}
+ <h2>Mis grupos</h2><div class="chips">${S.groups.map(g=>`<button class="chip" data-act="goto" data-id="materias">${e(g.name)}</button>`).join('')}<button class="chip new" data-act="newgroup">+ Nuevo</button></div>
+ <button class="fab" data-act="newtask" aria-label="Nueva tarea">+</button>`}
+
+function subjRow(s){return `<div class="card row tap" draggable="true" data-drag="${s.id}" data-act="open" data-id="${s.id}"><span class="hd" data-handle title="Arrastra para mover">≡</span><span class="sw" style="background:${s.color}"></span><div class="g"><div class="title">${e(s.name)}</div><div class="mut">${pendCount(s.id)} tareas pendientes</div></div><span class="mut">›</span></div>`}
+function vMaterias(){
+ let body;
+ if(!S.subjects.length)body=`<div class="empty"><p>Aún no tienes materias.</p><button class="btn sm" data-act="addsubjects">Agregar materias</button></div>`;
+ else if(view==='todas')body=S.subjects.map(subjRow).join('');
+ else body=S.groups.map(g=>{const l=S.subjects.filter(s=>s.group===g.id);return `<div class="grp" data-drop="${g.id}"><div class="row sp"><b data-act="collapse" data-id="${g.id}" style="cursor:pointer">${e(g.name)}</b><span class="row" style="gap:6px"><button class="mut" data-act="editgroup" data-id="${g.id}" aria-label="Editar grupo">✎</button><span class="mut" data-act="collapse" data-id="${g.id}">[${l.length}] ${collapsed[g.id]?'▸':'▾'}</span></span></div>${collapsed[g.id]?'':l.map(subjRow).join('')||'<div class="mut">Arrastra materias aquí</div>'}</div>`}).join('')+`<button class="dash" data-act="newgroup">+ Crear grupo nuevo</button><p class="mut" style="text-align:center">Mantén presionado ≡ y arrastra una materia para pasarla a otro grupo (o usa ⋯ dentro de la materia).</p>`;
+ return `<div class="row sp"><h1>Mis materias</h1><button class="btn sm" data-act="addsubjects">+ Agregar</button></div>
+ <div class="seg" style="margin:14px 0"><button class="${view!=='todas'?'on':''}" data-act="view" data-id="grupo">Por grupo</button><button class="${view==='todas'?'on':''}" data-act="view" data-id="todas">Todas</button></div>${body}`}
+
+function vMateria(id){const s=sub(id);if(!s){location.hash='materias';return''}
+ const ts=S.tasks.filter(t=>t.subject===id),p=ts.filter(t=>!t.done).sort((a,b)=>PR[a.priority]-PR[b.priority]||byDue(a,b)),d=ts.filter(t=>t.done);
+ const hor=s.schedule.length?s.schedule.map(h=>DL[h.day]+' '+h.start).join(', '):'Sin horario';
+ let c;
+ if(tab==='tareas')c=`<h2 style="margin-top:6px">Pendientes</h2>${p.map(t=>taskRow(t,{due:1,prio:1})).join('')||'<div class="card mut">Sin tareas pendientes 🎉</div>'}<h2>Completadas</h2>${d.map(t=>taskRow(t,{})).join('')||'<div class="mut">Aún no completas ninguna.</div>'}<button class="fab" style="width:auto;padding:0 22px;font-size:16px;font-weight:800;border-radius:99px" data-act="newtask" data-sub="${id}">+ Nueva tarea</button>`;
+ else if(tab==='horario')c=`${s.schedule.map((h,i)=>`<div class="card row"><div class="g"><div class="title">${DAYS[h.day]}</div><div class="mut">${h.start} – ${h.end}${h.room?' · '+e(h.room):''}</div></div><button class="ib" data-act="delsch" data-id="${i}" aria-label="Eliminar">🗑</button></div>`).join('')||'<div class="card mut">Agrega los días y horas de esta clase.</div>'}
+ <form data-form="sched" class="card"><label style="margin-top:0">Día</label><select name="day">${DAYS.map((x,i)=>`<option value="${i}">${x}</option>`).join('')}</select>
+ <div class="row"><div class="g"><label>Inicio</label><input type="time" name="start" value="07:00" required></div><div class="g"><label>Fin</label><input type="time" name="end" value="09:00" required></div></div>
+ <label>Salón</label><input type="text" name="room" value="${e(s.room||'')}" placeholder="Ej. A-203"><button class="btn" style="margin-top:14px">Agregar horario</button></form>`;
+ else c=`<label style="margin-top:0">Notas de la materia</label><textarea data-notes style="min-height:260px" placeholder="Apuntes, enlaces, ideas…">${e(s.notes||'')}</textarea><div class="mut">Se guarda automáticamente.</div>`;
+ return `<div class="row"><button class="ib" data-act="goto" data-id="materias" aria-label="Volver">‹</button><span class="sw" style="background:${s.color}"></span><div class="g"><h1 style="font-size:24px;margin:0">${e(s.name)}</h1><div class="mut">${e(s.teacher||'Sin profesor')} · ${hor}</div></div><button class="ib" data-act="submenu" data-id="${id}" aria-label="Más">⋯</button></div>
+ <div class="tabs">${[['tareas','Tareas'],['horario','Horario'],['notas','Notas']].map(([k,l])=>`<button class="${tab===k?'on':''}" data-act="tab" data-id="${k}">${l}</button>`).join('')}</div>${c}`}
+
+function evsFor(ds){const d=dt(ds),out=[];
+ S.subjects.forEach(s=>s.schedule.forEach(h=>{if(h.day===wd(d))out.push({k:'c',t:h.start,s,h})}));
+ S.tasks.filter(t=>t.due===ds&&!t.done).forEach(t=>out.push({k:'e',t:t.time||'24',task:t,s:sub(t.subject)}));
+ return out.sort((a,b)=>a.t>b.t?1:-1)}
+function vCal(){const d=dt(cal.date);let nav,main;
+ const hdr=`<div class="row sp"><h1>Calendario</h1><div class="seg" style="width:150px"><button class="${cal.mode==='week'?'on':''}" data-act="calmode" data-id="week">Semana</button><button class="${cal.mode==='month'?'on':''}" data-act="calmode" data-id="month">Mes</button></div></div>`;
+ const mon=addD(cal.date,-wd(d)),sun=addD(mon,6);
+ if(cal.mode==='week'){const a=dt(mon),b=dt(sun);
+  nav=`${a.getDate()} al ${b.getDate()} de ${MONTHS[b.getMonth()]}`;
+  main=`<div class="days">${DL.map((l,i)=>{const x=addD(mon,i);return `<button class="${x===cal.date?'on':''} ${x===todayS()?'today':''}" data-act="pick" data-id="${x}">${l}<b>${dt(x).getDate()}</b></button>`}).join('')}</div>
+  <div class="row mut" style="gap:16px;margin-bottom:14px"><span>■ Clase</span><span>▢ Entrega</span></div>`;
+  const ev=evsFor(cal.date);
+  main+=ev.map(x=>x.k==='c'?`<div class="ev"><time>${x.h.start}</time><div class="card tap" style="border-left-color:${x.s.color}" data-act="open" data-id="${x.s.id}"><div class="title">${e(x.s.name)}</div><div class="mut">${e(x.h.room||'Sin salón')} · ${x.h.start} – ${x.h.end}</div></div></div>`:`<div class="ev"><time>${x.task.time||'Todo el día'}</time><div class="card ent tap" style="border-left-color:${x.s?x.s.color:'var(--mut)'}" data-act="edittask" data-id="${x.task.id}"><div class="title">Entrega: ${e(x.task.title)}</div><div class="mut">${x.s?e(x.s.name):''} · ${PN[x.task.priority]}</div></div></div>`).join('')||`<div class="empty"><p>Sin clases ni entregas este día.</p></div>`;
+ }else{const f=new Date(d.getFullYear(),d.getMonth(),1),st=addD(iso(f),-wd(f));nav=MONTHS[d.getMonth()]+' '+d.getFullYear();
+  main=`<div class="days" style="margin-bottom:0">${DL.map(l=>`<div class="mut" style="text-align:center">${l}</div>`).join('')}</div><div class="mg">${Array.from({length:42},(_,i)=>{const x=addD(st,i),xd=dt(x),ev=evsFor(x);return `<button class="${xd.getMonth()!==d.getMonth()?'out':''} ${x===todayS()?'today':''} ${x===cal.date?'on':''}" data-act="pickweek" data-id="${x}">${xd.getDate()}<span class="dots">${ev.some(v=>v.k==='c')?'<i></i>':''}${ev.some(v=>v.k==='e')?'<i class="t"></i>':''}</span></button>`}).join('')}</div><p class="mut">● clases · <span class="late">●</span> entregas. Toca un día para ver su detalle.</p>`}
+ return `${hdr}<div class="row sp" style="margin-top:14px"><button class="ib" data-act="calnav" data-id="-1" aria-label="Anterior">‹</button><b>${nav}</b><button class="ib" data-act="calnav" data-id="1" aria-label="Siguiente">›</button></div>${main}<button class="fab" data-act="newtask" data-due="${cal.date}" aria-label="Nueva tarea">+</button>`}
+
+function vPerfil(){const done=S.tasks.filter(t=>t.done).length;
+ return `<h1>Perfil</h1><div class="card"><label style="margin-top:0">Tu nombre</label><input type="text" id="pname" value="${e(S.name)}" placeholder="¿Cómo te llamas?"></div>
+ <div class="card row sp"><div><b>${S.subjects.length}</b><div class="mut">materias</div></div><div><b>${S.tasks.length-done}</b><div class="mut">pendientes</div></div><div><b>${done}</b><div class="mut">completadas</div></div></div>
+ <div class="card"><label style="margin-top:0">Tema</label><div class="seg">${[['auto','Auto'],['light','Claro'],['dark','Oscuro']].map(([k,l])=>`<button class="${S.theme===k?'on':''}" data-act="theme" data-id="${k}">${l}</button>`).join('')}</div></div>
+ <h2>Tus datos</h2><div class="mut" style="margin-bottom:10px">Todo se guarda en este dispositivo. Descarga una copia para no perderla.</div>
+ <div class="row"><button class="btn sec" data-act="export">Exportar</button><button class="btn sec" data-act="import">Importar</button></div>
+ <button class="btn sec" style="margin-top:12px;color:var(--hi)" data-act="reset">Borrar todo</button><input type="file" id="file" accept="application/json" hidden>`}
+
+function render(){applyTheme();const r=route(),m=r.startsWith('materia/')?'materias':r;
+ $('#nav').innerHTML=[['hoy','Hoy','☀'],['materias','Materias','▤'],['calendario','Calendario','▦'],['perfil','Perfil','☺']].map(([k,l,i])=>`<a href="#${k}" class="${m===k?'on':''}"><i>${i}</i>${l}</a>`).join('');
+ $('#app').innerHTML=r.startsWith('materia/')?vMateria(r.slice(8)):({hoy:vHoy,materias:vMaterias,calendario:vCal,perfil:vPerfil}[r]||vHoy)();
+ if(!S.name&&!$('#modal').innerHTML)onboard()}
+addEventListener('hashchange',()=>{tab='tareas';render();scrollTo(0,0)});
+
+/* ---------- modales ---------- */
+function modal(h){const m=$('#modal');m.innerHTML=`<div class="sheet">${h}</div>`;m.hidden=false}
+function closeM(){const m=$('#modal');m.hidden=true;m.innerHTML=''}
+$('#modal').addEventListener('click',ev=>{if(ev.target.id==='modal'&&S.name)closeM()});
+const subOpts=(sel)=>`<option value="">Sin materia</option>`+S.subjects.map(s=>`<option value="${s.id}" ${s.id===sel?'selected':''}>${e(s.name)}</option>`).join('');
+const grpOpts=sel=>S.groups.map(g=>`<option value="${g.id}" ${g.id===sel?'selected':''}>${e(g.name)}</option>`).join('');
+
+function onboard(){modal(`<h1>Bienvenido a Organize</h1><p class="mut">Tus materias, tareas y entregas en un solo lugar.</p><form data-form="name"><label>¿Cómo te llamas?</label><input type="text" name="name" required autofocus placeholder="Tu nombre"><button class="btn" style="margin-top:18px">Empezar</button></form>`)}
+function taskForm(t={}){const edit=!!t.id;
+ modal(`<div class="row sp"><h1 style="font-size:24px">${edit?'Editar tarea':'Nueva tarea'}</h1><button class="ib" data-act="close" aria-label="Cerrar">×</button></div>
+ <form data-form="task" data-id="${t.id||''}"><label>Título</label><input type="text" name="title" required placeholder="Ej. Taller de ejercicios" value="${e(t.title||'')}">
+ <label>Materia</label><select name="subject">${subOpts(t.subject)}</select>
+ <div class="row"><div class="g"><label>Fecha de entrega</label><input type="date" name="due" value="${t.due||''}"></div><div class="g"><label>Hora (opcional)</label><input type="time" name="time" value="${t.time||''}"></div></div>
+ <label>Prioridad</label><div class="prio">${['baja','media','alta'].map(p=>`<label><input type="radio" name="priority" value="${p}" ${(t.priority||'media')===p?'checked':''}><span>${PN[p]}</span></label>`).join('')}</div>
+ <div class="row sp" style="margin-top:16px"><b>Recordarme antes</b><span class="row"><select name="remindDays" style="width:auto">${[1,2,3,7].map(n=>`<option value="${n}" ${(t.remindDays||1)===n?'selected':''}>${n} día${n>1?'s':''} antes</option>`).join('')}</select><input type="checkbox" name="remind" style="width:24px;height:24px;accent-color:var(--acc)" ${t.remind!==false?'checked':''}></span></div>
+ <label>Notas</label><textarea name="notes" placeholder="Detalles de la tarea…">${e(t.notes||'')}</textarea>
+ <div class="row" style="margin-top:16px"><button type="button" class="btn sec" data-act="close">Cancelar</button><button class="btn">Guardar tarea</button></div>
+ ${edit?`<button type="button" class="btn sec" style="margin-top:10px;color:var(--hi)" data-act="deltask" data-id="${t.id}">Eliminar tarea</button>`:''}</form>`)}
+function addSubjects(){modal(`<div class="row sp"><h1 style="font-size:24px">Agregar materias</h1><button class="ib" data-act="close" aria-label="Cerrar">×</button></div>
+ <form data-form="subjects"><label>Buscar materia</label><input type="text" id="sq" placeholder="Escribe el nombre…" autocomplete="off">
+ <h2>Sugeridas</h2><div id="sl">${SUGG.map(n=>`<label class="opt"><input type="checkbox" name="s" value="${e(n)}">${n}</label>`).join('')}</div>
+ <button type="button" class="dash" data-act="customsub">+ Crear una materia propia</button>
+ <label>Asignar al grupo</label><select name="group">${grpOpts()}</select>
+ <button class="btn" style="margin-top:18px" id="addbtn">Agregar materias</button></form>`)}
+function subjectForm(s){modal(`<div class="row sp"><h1 style="font-size:24px">Editar materia</h1><button class="ib" data-act="close" aria-label="Cerrar">×</button></div>
+ <form data-form="subject" data-id="${s.id}"><label>Nombre</label><input type="text" name="name" required value="${e(s.name)}"><label>Profesor</label><input type="text" name="teacher" value="${e(s.teacher||'')}">
+ <label>Grupo</label><select name="group">${grpOpts(s.group)}</select><label>Color</label><div class="cols">${COLORS.map(c=>`<label><input type="radio" name="color" value="${c}" ${s.color===c?'checked':''}><span style="background:${c}"></span></label>`).join('')}</div>
+ <button class="btn" style="margin-top:18px">Guardar</button><button type="button" class="btn sec" style="margin-top:10px;color:var(--hi)" data-act="delsub" data-id="${s.id}">Eliminar materia y sus tareas</button></form>`)}
+function groupForm(g){modal(`<h1 style="font-size:24px">${g?'Editar grupo':'Nuevo grupo'}</h1><form data-form="group" data-id="${g?g.id:''}"><label>Nombre del grupo</label><input type="text" name="name" required placeholder="Ej. Electivas" value="${g?e(g.name):''}"><button class="btn" style="margin-top:18px">Guardar</button>${g&&S.groups.length>1?`<button type="button" class="btn sec" style="margin-top:10px;color:var(--hi)" data-act="delgroup" data-id="${g.id}">Eliminar grupo</button>`:''}</form>`)}
+
+/* ---------- acciones ---------- */
+const A={
+ close:closeM,goto:id=>location.hash=id,view:id=>{view=id;render()},tab:id=>{tab=id;render()},
+ open:id=>location.hash='materia/'+id,collapse:id=>{collapsed[id]=!collapsed[id];render()},
+ toggle:id=>{const t=S.tasks.find(x=>x.id===id);t.done=!t.done;commit()},
+ newtask:(id,el)=>{if(!S.subjects.length&&!confirm('Aún no tienes materias. ¿Crear la tarea sin materia?')){addSubjects();return}taskForm({subject:el.dataset.sub,due:el.dataset.due})},
+ edittask:id=>taskForm(S.tasks.find(x=>x.id===id)),
+ deltask:id=>{if(confirm('¿Eliminar esta tarea?')){S.tasks=S.tasks.filter(t=>t.id!==id);closeM();commit()}},
+ addsubjects:addSubjects,
+ customsub:()=>{const n=prompt('Nombre de la materia');if(!n||!n.trim())return;$('#sl').insertAdjacentHTML('afterbegin',`<label class="opt"><input type="checkbox" name="s" value="${e(n.trim())}" checked>${e(n.trim())}</label>`)},
+ submenu:(id)=>{const s=sub(id);modal(`<h1 style="font-size:22px">${e(s.name)}</h1><button class="btn sec" data-act="editsub" data-id="${id}" style="margin-bottom:10px">Editar materia</button><label style="margin-top:0">Mover a otro grupo</label><select data-move="${id}">${grpOpts(s.group)}</select><button class="btn sec" data-act="close" style="margin-top:14px">Cerrar</button>`)},
+ editsub:id=>subjectForm(sub(id)),
+ delsub:id=>{if(confirm('¿Eliminar la materia y todas sus tareas?')){S.subjects=S.subjects.filter(s=>s.id!==id);S.tasks=S.tasks.filter(t=>t.subject!==id);closeM();location.hash='materias';commit()}},
+ delsch:i=>{sub(route().slice(8)).schedule.splice(+i,1);commit()},
+ newgroup:()=>groupForm(),editgroup:id=>groupForm(S.groups.find(g=>g.id===id)),
+ delgroup:id=>{if(!confirm('Las materias de este grupo pasarán al primer grupo. ¿Continuar?'))return;S.groups=S.groups.filter(g=>g.id!==id);S.subjects.forEach(s=>{if(s.group===id)s.group=S.groups[0].id});closeM();commit()},
+ calmode:id=>{cal.mode=id;render()},pick:id=>{cal.date=id;render()},pickweek:id=>{cal.date=id;cal.mode='week';render()},
+ calnav:id=>{const d=dt(cal.date);if(cal.mode==='week')cal.date=addD(cal.date,7*id);else{d.setDate(1);d.setMonth(d.getMonth()+ +id);cal.date=iso(d)}render()},
+ theme:id=>{S.theme=id;commit()},
+ export:()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S,null,1)],{type:'application/json'}));a.download='organize-respaldo.json';a.click()},
+ import:()=>$('#file').click(),
+ reset:()=>{if(confirm('Se borrarán todas tus materias y tareas. ¿Seguro?')){localStorage.removeItem(KEY);location.hash='hoy';location.reload()}}
+};
+document.addEventListener('click',ev=>{const el=ev.target.closest('[data-act]');if(!el)return;
+ if(el.dataset.act!=='toggle'&&ev.target.closest('[data-act=toggle]'))return;
+ const f=A[el.dataset.act];if(f){ev.preventDefault();f(el.dataset.id,el)}});
+document.addEventListener('input',ev=>{const t=ev.target;
+ if(t.id==='sq'){const q=t.value.toLowerCase();document.querySelectorAll('#sl .opt').forEach(l=>l.hidden=!l.textContent.toLowerCase().includes(q))}
+ if(t.id==='pname'){S.name=t.value.trim();save()}
+ if(t.dataset.notes!==undefined){sub(route().slice(8)).notes=t.value;save()}
+ if(t.name==='s')$('#addbtn').textContent='Agregar '+document.querySelectorAll('#sl input:checked').length+' materias'});
+document.addEventListener('change',ev=>{const t=ev.target;
+ if(t.dataset.move){sub(t.dataset.move).group=t.value;closeM();commit();toast('Materia movida')}
+ if(t.id==='file'&&t.files[0]){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!d.subjects||!d.tasks)throw 0;S=d;commit();toast('Datos importados')}catch(_){alert('El archivo no es un respaldo válido de Organize.')}};r.readAsText(t.files[0])}});
+document.addEventListener('submit',ev=>{const f=ev.target.dataset.form;if(!f)return;ev.preventDefault();const d=Object.fromEntries(new FormData(ev.target)),id=ev.target.dataset.id;
+ if(f==='name'){S.name=d.name.trim();closeM();commit()}
+ if(f==='task'){const o={title:d.title.trim(),subject:d.subject,due:d.due,time:d.time,priority:d.priority,remind:!!d.remind,remindDays:+d.remindDays,notes:d.notes};
+  if(id)Object.assign(S.tasks.find(t=>t.id===id),o);else S.tasks.push({id:uid(),done:false,...o});
+  if(o.remind&&'Notification'in window&&Notification.permission==='default')Notification.requestPermission();
+  closeM();commit();toast('Tarea guardada')}
+ if(f==='subjects'){const ns=[...ev.target.querySelectorAll('input[name=s]:checked')].map(i=>i.value);if(!ns.length){toast('Elige al menos una materia');return}
+  ns.forEach((n,i)=>S.subjects.push({id:uid(),name:n,teacher:'',room:'',color:COLORS[(S.subjects.length+i)%COLORS.length],group:d.group,schedule:[],notes:''}));closeM();commit();toast(ns.length+' materia(s) agregada(s)')}
+ if(f==='subject'){Object.assign(sub(id),{name:d.name.trim(),teacher:d.teacher,group:d.group,color:d.color});closeM();commit()}
+ if(f==='group'){const n=d.name.trim();if(id)S.groups.find(g=>g.id===id).name=n;else S.groups.push({id:uid(),name:n});closeM();commit()}
+ if(f==='sched'){if(d.end<=d.start){toast('La hora de fin debe ser después del inicio');return}const s=sub(route().slice(8));s.schedule.push({day:+d.day,start:d.start,end:d.end,room:d.room});s.schedule.sort((a,b)=>a.day-b.day||(a.start>b.start?1:-1));if(d.room)s.room=d.room;commit()}});
+
+/* arrastrar materias entre grupos (escritorio) + mantener presionado ≡ (móvil) */
+let dragId=null;
+document.addEventListener('dragstart',ev=>{const c=ev.target.closest('[data-drag]');if(c){dragId=c.dataset.drag;ev.dataTransfer.setData('text','x')}});
+document.addEventListener('dragover',ev=>{const g=ev.target.closest('[data-drop]');if(g&&dragId){ev.preventDefault();document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'));g.classList.add('over')}});
+document.addEventListener('drop',ev=>{const g=ev.target.closest('[data-drop]');if(g&&dragId){ev.preventDefault();sub(dragId).group=g.dataset.drop;dragId=null;commit()}});
+document.addEventListener('dragend',()=>{dragId=null;document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'))});
+let pt=null,pEl=null;
+document.addEventListener('pointerdown',ev=>{const h=ev.target.closest('[data-handle]');if(h&&ev.pointerType!=='mouse'){const id=h.closest('[data-drag]').dataset.drag;pt=setTimeout(()=>{pEl=id;navigator.vibrate&&navigator.vibrate(30);toast('Suelta sobre un grupo')},350)}});
+document.addEventListener('pointermove',ev=>{if(pEl){document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'));const g=document.elementFromPoint(ev.clientX,ev.clientY)?.closest('[data-drop]');g&&g.classList.add('over')}});
+document.addEventListener('pointerup',ev=>{clearTimeout(pt);if(pEl){const g=document.elementFromPoint(ev.clientX,ev.clientY)?.closest('[data-drop]');if(g){sub(pEl).group=g.dataset.drop;commit()}pEl=null;document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'))}});
+document.addEventListener('contextmenu',ev=>{if(ev.target.closest('[data-handle]'))ev.preventDefault()});
+
+/* notificaciones de recordatorio (una vez al día por tarea) */
+function remind(){if(!('Notification'in window)||Notification.permission!=='granted')return;const td=todayS(),k='organize.notified',seen=JSON.parse(localStorage.getItem(k)||'{}');
+ S.tasks.filter(t=>!t.done&&t.remind&&t.due>=td&&addD(t.due,-(t.remindDays||1))<=td&&seen[t.id]!==td).forEach(t=>{new Notification('Organize: '+t.title,{body:'Entrega: '+fmt(t.due)});seen[t.id]=td});localStorage.setItem(k,JSON.stringify(seen))}
+if(!location.hash)location.hash='hoy';
+render();remind();setInterval(()=>{if(!document.hidden){remind()}},60000);
+</script>
+</body>
+</html>
